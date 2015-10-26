@@ -23,12 +23,6 @@ Droppable.prototype.drop = function (e) {
     dragManager.taker = e.currentTarget;
 
     if (dragManager.taker != dragManager.giver) {
-        var clone = dragManager.element.cloneNode(true);
-
         dragManager.taker.appendChild(dragManager.element);
-
-        for (var i = 0, len = droppable.elems.length; i < len; i++) {
-            droppable.elems[i].appendChild(clone);
-        }
     }
 };
