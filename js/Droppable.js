@@ -11,6 +11,7 @@ var Droppable = function (elems) {
 Droppable.prototype.dragStart = function (e) {
     dragManager.element = e.target;
     dragManager.giver = e.currentTarget;
+    e.dataTransfer.setData('text/html', '');
 };
 
 Droppable.prototype.dragOver = function (e) {
