@@ -7,6 +7,7 @@ extend(CoolDroppable, Droppable);
 
 CoolDroppable.prototype.drop = function (e) {
     Droppable.prototype.drop.apply(this, arguments);
+
     if (dragManager.taker != dragManager.giver) {
         var elems = this.elems,
             elemsClases = this.classes;
