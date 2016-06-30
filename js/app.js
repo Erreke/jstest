@@ -1,8 +1,11 @@
-var droppableElements = document.querySelectorAll('.droppable');
-var coolDroppableElements = document.querySelectorAll('.cool_droppable');
-var superCoolDroppableElements = document.querySelectorAll('.super_cool_droppable');
+function ready() {
+    var list = new List(),
+        listRedStroked = new ListRedStroked(),
+        listRedStrokedAndFilled = new ListRedStrokedAndFilled();
 
-var dragManager = new DragManager();
-var droppable = new Droppable(droppableElements);
-var coolDroppable = new CoolDroppable(coolDroppableElements);
-var superCoolDroppable = new SuperCoolDroppable(superCoolDroppableElements);
+    list.init(document.querySelectorAll('.list_type_simple'));
+    listRedStroked.init(document.querySelectorAll('.list_type_red-stroked'));
+    listRedStrokedAndFilled.init(document.querySelectorAll('.list_type_red-stroked-and-filled'));
+}
+
+document.addEventListener('DOMContentLoaded', ready);

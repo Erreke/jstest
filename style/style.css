@@ -1,30 +1,49 @@
-* {
+body {
     margin: 0;
-    padding: 0;
 }
-ul {
-    position: relative;
+.list {
     margin: 20px;
+    padding: 0 10px;
     width: 500px;
-    border: 2px dashed #bbb;
+    border: 1px dashed #ccc;
+    border-radius: 7px;
 }
-li {
-    margin: 5px;
-    padding: 5px;
-    width: 475px;
+.list__item {
+    margin: 10px 0;
+    padding: 10px;
+    width: 480px;
     border-radius: 5px;
-    background-color: #eee;
-    box-shadow: inset 0 0 3px #000;
+    background: linear-gradient(#eee, #ddd);
+    color: #555;
     list-style: none;
     text-align: center;
-    cursor: move;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+    cursor: grab;
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
 }
-.droppable_border {
-    border: 2px solid #ff2b3b;
+.list__item:hover {
+    background-color: #ccc;
 }
-.droppable_background {
-    background-color: #ff858e;
+.list__item_dragging_yes {
+    position: absolute;
+    z-index: 1;
+    margin-left: -5px;
+    width: 490px;
+    background: linear-gradient(rgba(130, 255, 132, 0.4), rgba(130, 255, 132, 0.7));
+    box-shadow: 0 0 7px rgba(0, 0, 0, .4);
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+    cursor: grabbing;
+}
+.list__item_dragging_yes:hover {
+    background: linear-gradient(rgba(130, 255, 132, 0.4), rgba(130, 255, 132, 0.7));
+}
+.list_stroked_red {
+    border: 1px solid rgb(255, 29, 51);
+}
+.list_filled_red {
+    background: rgba(255, 29, 51, .5);
 }
