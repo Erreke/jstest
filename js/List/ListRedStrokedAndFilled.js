@@ -6,22 +6,20 @@ var ListRedStrokedAndFilled = function () {
 
 ListRedStrokedAndFilled.prototype = Object.create(ListRedStroked.prototype);
 
-ListRedStrokedAndFilled.prototype.moveTargetToNewList = function () {
-    ListRedStroked.prototype.moveTargetToNewList.apply(this, arguments);
+ListRedStrokedAndFilled.prototype.callback = function(that){
+    var self = that;
+    that.clone = that.target.el.cloneNode(true);
 
-    var self = this;
-    this.clone = this.target.el.cloneNode(true);
-
-    this.mainLists.forEach(function (item) {
+    that.mainLists.forEach(function (item) {
         item.appendChild(self.clone);
     });
 
-    if (this.clone.classList.contains(this.classes.listItemDragging)) {
-        this.clone.classList.remove(this.classes.listItemDragging);
-        this.clone.removeAttribute('style');
+    if (that.clone.classList.contains(that.classes.listItemDragging)) {
+        that.clone.classList.remove(that.classes.listItemDragging);
+        that.clone.removeAttribute('style');
     }
 
-    this.lists.forEach(function (item) {
+    that.lists.forEach(function (item) {
         item.classList.add(self.classes.redFilled);
     });
 
@@ -30,4 +28,10 @@ ListRedStrokedAndFilled.prototype.moveTargetToNewList = function () {
             item.classList.remove(self.classes.redFilled);
         });
     }, 1000);
+};
+
+ListRedStrokedAndFilled.prototype.moveTargetToNewList = function (e) {
+    if (this.target) {
+        ListRedStroked.prototype.moveTargetToNewList.call(this, e, this.callback);
+    }
 };

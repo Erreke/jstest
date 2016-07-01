@@ -2,8 +2,8 @@ body {
     margin: 0;
 }
 .list {
-    margin: 20px;
-    padding: 0 10px;
+    margin: 10px;
+    padding: 20px 10px;
     width: 500px;
     border: 1px dashed #ccc;
     border-radius: 7px;
@@ -23,6 +23,12 @@ body {
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+}
+.list__item:first-child {
+    margin-top: 0;
+}
+.list__item:last-child {
+    margin-bottom: 0;
 }
 .list__item:hover {
     background-color: #ccc;
@@ -45,5 +51,5 @@ body {
     border: 1px solid rgb(255, 29, 51);
 }
 .list_filled_red {
-    background: rgba(255, 29, 51, .5);
+    background: rgba(255, 29, 51, .2);
 }

@@ -3,8 +3,6 @@ var List = function () {
 };
 
 List.prototype.dropTo = null;
-List.prototype.isNowDragging = false;
-List.prototype.isThisDroppable = false;
 List.prototype.target = {
     el: null,
     height: 0,
@@ -29,7 +27,6 @@ List.prototype.onMouseDown = function (e) {
 
     var coords = e.target.getBoundingClientRect();
 
-    this.isNowDragging = true;
     this.target.el = e.target;
     this.target.y = coords.top;
     this.target.height = coords.height;
@@ -37,47 +34,47 @@ List.prototype.onMouseDown = function (e) {
 };
 
 List.prototype.onMouseMove = function (e) {
-    if (!this.isNowDragging) return false;
+    if (!this.target.el) return false;
 
-    this.target.el.hidden = true;
-    var el = document.elementFromPoint(e.clientX, e.clientY);
-    this.target.el.hidden = false;
-
-    this.isThisDroppable = el.classList.contains(this.classes.list);
-
-    if (this.isThisDroppable) {
-        this.dropTo = el;
-    }
-
-    this.pullTargetFromFlow();
-    this.movingTarget(e);
-};
-
-List.prototype.pullTargetFromFlow = function () {
-    this.target.el.classList.add(this.classes.listItemDragging);
-};
-
-List.prototype.movingTarget = function (e) {
     var top = e.pageY - (this.target.downY - this.target.y),
         availableBottomY = document.body.clientHeight - this.target.height,
         availableTopY = 0;
 
     if (availableTopY <= top && availableBottomY >= top) {
+        this.target.el.classList.add(this.classes.listItemDragging);
         this.target.el.style.top = top + 'px';
     }
 };
 
+List.prototype.onMouseEnter = function (e) {
+    if (!this.target.el) return false;
+
+    this.dropTo =  e.currentTarget;
+
+    console.log('MouseEnter', e.currentTarget);
+};
+
+List.prototype.onMouseLeave = function () {
+    this.dropTo =  null;
+};
+
 List.prototype.onMouseUp = function (e) {
-    if (this.isNowDragging && this.isThisDroppable) {
+    //console.log('dropTo', this.dropTo);
+    //console.log('target', this.target.el);
+
+    if (this.target.el && this.dropTo) {
         this.moveTargetToNewList(e);
     } else {
         this.revertAll();
     }
 };
 
-List.prototype.moveTargetToNewList = function () {
-    this.dropTo.appendChild(this.target.el);
-    this.pushTargetToFlow();
+List.prototype.moveTargetToNewList = function (e, callback) {
+    if(this.dropTo.classList.contains(this.classes.list)) {
+        if (callback) callback(this);
+        this.dropTo.appendChild(this.target.el);
+        this.pushTargetToFlow();
+    }
 };
 
 List.prototype.revertAll = function () {
@@ -89,19 +86,26 @@ List.prototype.pushTargetToFlow = function () {
         if (this.target.el.classList.contains(this.classes.listItemDragging)) {
             this.target.el.classList.remove(this.classes.listItemDragging);
             this.target.el.removeAttribute('style');
+            this.target.el = null;
         }
-        this.isNowDragging = false;
-        this.isThisDroppable = false;
     }
 };
 
 List.prototype.init = function (lists) {
     Array.prototype.forEach.call(lists, function (item) {
         this.lists.push(item);
+
         item.addEventListener('mousedown', this.onMouseDown.bind(this));
         item.addEventListener('mousemove', this.onMouseMove.bind(this));
+        item.addEventListener('mouseenter', this.onMouseEnter.bind(this));
+        item.addEventListener('mouseleave', this.onMouseLeave.bind(this));
         item.addEventListener('mouseup', this.onMouseUp.bind(this));
+
     }, this);
 
-    document.addEventListener('mouseup', this.revertAll.bind(this));
+    /*document.addEventListener('mousedown', this.onMouseDown.bind(this));
+    document.addEventListener('mousemove', this.onMouseMove.bind(this));
+    document.addEventListener('mouseup', this.onMouseUp.bind(this));*/
+
+    //document.addEventListener('mouseup', this.revertAll.bind(this));
 };
