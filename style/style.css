@@ -8,6 +8,9 @@ body {
     border: 1px dashed #ccc;
     border-radius: 7px;
 }
+.list_ready-to_drop {
+    border: 1px solid #ccc;
+}
 .list__item {
     margin: 10px 0;
     padding: 10px;
@@ -38,14 +41,15 @@ body {
     z-index: 1;
     margin-left: -5px;
     width: 490px;
-    background: linear-gradient(rgba(130, 255, 132, 0.4), rgba(130, 255, 132, 0.7));
+    background: linear-gradient(rgba(130, 255, 132, .4), rgba(130, 255, 132, 0.7));
     box-shadow: 0 0 7px rgba(0, 0, 0, .4);
     cursor: -webkit-grabbing;
     cursor: -moz-grabbing;
     cursor: grabbing;
+    pointer-events: none;
 }
 .list__item_dragging_yes:hover {
-    background: linear-gradient(rgba(130, 255, 132, 0.4), rgba(130, 255, 132, 0.7));
+    background: linear-gradient(rgba(130, 255, 132, .4), rgba(130, 255, 132, .7));
 }
 .list_stroked_red {
     border: 1px solid rgb(255, 29, 51);

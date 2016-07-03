@@ -1,18 +1,18 @@
 var ListRedStroked = function () {
-    this.lists = [];
+    this.containers = [];
 };
 
 ListRedStroked.prototype = Object.create(List.prototype);
 
-ListRedStroked.prototype.callback = function(that){
+ListRedStroked.prototype.addRedStroke = function (that) {
     var self = that;
 
-    that.lists.forEach(function (item) {
+    that.containers.forEach(function (item) {
         item.classList.add(self.classes.redStroked);
     });
 
-    setTimeout(function(){
-        self.lists.forEach(function (item) {
+    setTimeout(function () {
+        self.containers.forEach(function (item) {
             item.classList.remove(self.classes.redStroked);
         });
     }, 1000);
@@ -20,7 +20,6 @@ ListRedStroked.prototype.callback = function(that){
 
 ListRedStroked.prototype.moveTargetToNewList = function (e, callback) {
     if (callback) callback(this);
-    if (this.target) {
-        List.prototype.moveTargetToNewList.call(this, e, this.callback);
-    }
+
+    List.prototype.moveTargetToNewList.call(this, e, this.addRedStroke);
 };
